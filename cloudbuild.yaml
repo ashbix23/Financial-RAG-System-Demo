@@ -1,0 +1,59 @@
+# Google Cloud Build configuration for Cloud Run deployment
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/rag-production-system:$COMMIT_SHA', '.']
+  
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/rag-production-system:$COMMIT_SHA']
+  
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'rag-production-system'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/rag-production-system:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--memory'
+      - '2Gi'
+      - '--cpu'
+      - '2'
+      - '--timeout'
+      - '300'
+      - '--max-instances'
+      - '10'
+      - '--set-env-vars'
+      - 'ANTHROPIC_API_KEY=${_ANTHROPIC_API_KEY},COHERE_API_KEY=${_COHERE_API_KEY},PINECONE_API_KEY=${_PINECONE_API_KEY},LLM_MODEL=${_LLM_MODEL},EMBEDDING_MODEL_NAME=${_EMBEDDING_MODEL_NAME},COHERE_RERANK_MODEL=${_COHERE_RERANK_MODEL},PINECONE_INDEX_NAME=${_PINECONE_INDEX_NAME},PINECONE_DIMENSION=${_PINECONE_DIMENSION},PINECONE_METRIC=${_PINECONE_METRIC},CHUNK_SIZE=${_CHUNK_SIZE},CHUNK_OVERLAP=${_CHUNK_OVERLAP},RETRIEVAL_LIMIT=${_RETRIEVAL_LIMIT},RERANK_LIMIT=${_RERANK_LIMIT},ALLOWED_EXTENSIONS=${_ALLOWED_EXTENSIONS},MAX_UPLOAD_MB=${_MAX_UPLOAD_MB},PROJECT_NAME=${_PROJECT_NAME},API_V1_STR=${_API_V1_STR}'
+      - '--allow-unauthenticated'
+
+images:
+  - 'gcr.io/$PROJECT_ID/rag-production-system:$COMMIT_SHA'
+
+# Substitutions for secrets (set these in Cloud Build triggers)
+# Required substitutions:
+substitutions:
+  _ANTHROPIC_API_KEY: ''
+  _COHERE_API_KEY: ''
+  _PINECONE_API_KEY: ''
+  # Optional substitutions with defaults:
+  _LLM_MODEL: 'claude-haiku-4-5'
+  _EMBEDDING_MODEL_NAME: 'BAAI/bge-small-en-v1.5'
+  _COHERE_RERANK_MODEL: 'rerank-english-v3.0'
+  _PINECONE_INDEX_NAME: 'financial-rag-index'
+  _PINECONE_DIMENSION: '384'
+  _PINECONE_METRIC: 'cosine'
+  _CHUNK_SIZE: '1500'
+  _CHUNK_OVERLAP: '200'
+  _RETRIEVAL_LIMIT: '50'
+  _RERANK_LIMIT: '10'
+  _ALLOWED_EXTENSIONS: '.pdf,.txt,.html'
+  _MAX_UPLOAD_MB: '50'
+  _PROJECT_NAME: 'Financial RAG System'
+  _API_V1_STR: '/api/v1'

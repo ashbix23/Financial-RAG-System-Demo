@@ -1,0 +1,12 @@
+[
+    {
+        "question": "What is the company's policy on remote work in 2026?",
+        "ground_truth_answer": "Employees are required to be in the office 3 days a week (Tues-Thurs) with optional remote work on Mon/Fri.",
+        "expected_context_keywords": ["hybrid", "remote", "Tues-Thurs", "office policy"]
+    },
+    {
+        "question": "How do I reset my multi-factor authentication?",
+        "ground_truth_answer": "MFA can be reset through the 'Security Settings' tab in the employee portal or by contacting the IT helpdesk at ext 404.",
+        "expected_context_keywords": ["MFA", "multi-factor authentication", "helpdesk", "ext 404"]
+    }
+]

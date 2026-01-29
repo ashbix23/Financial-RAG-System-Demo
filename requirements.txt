@@ -1,0 +1,28 @@
+# Python 3.11+ recommended (see Dockerfile)
+# --- Web Framework & Server ---
+fastapi==0.115.0
+uvicorn[standard]==0.30.0
+pydantic==2.10.0
+pydantic-settings==2.4.0
+python-multipart==0.0.9
+
+# --- AI & LLM Models (Claude 4.5 Haiku & Cohere) ---
+anthropic==0.76.0
+cohere==5.20.2
+
+# --- Vector Database & Embedding Engine ---
+pinecone==5.4.2
+# Financial & specialized embeddings (BGE-Small)
+sentence_transformers==5.2.2
+numpy==1.26.4
+
+# --- Document Processing & RAG Utilities ---
+# unstructured 0.15.x has no wheel for Python 3.13; use 0.18.x with 3.11/3.12
+unstructured[pdf,html]>=0.18.0,<0.19
+langchain-text-splitters==0.3.2
+langchain-community==0.3.5
+
+# --- Utilities & Observability ---
+python-dotenv==1.0.1
+loguru==0.7.2
+
