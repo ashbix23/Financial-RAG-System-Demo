@@ -54,3 +54,4 @@ htmlcov/
 
 *.sh
 DEPLOYMENT.md
+.gcloudignore
