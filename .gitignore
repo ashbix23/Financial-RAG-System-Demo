@@ -51,3 +51,6 @@ data/temp/
 htmlcov/
 .pytest_cache/
 .mypy_cache/
+
+*.sh
+DEPLOYMENT.md

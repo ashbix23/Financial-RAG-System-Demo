@@ -373,3 +373,8 @@ gcloud run services logs read rag-production-system --region us-central1 --limit
 For issues specific to:
 - **Google Cloud Run**: [Cloud Run Documentation](https://cloud.google.com/run/docs)
 - **This Application**: Check logs and troubleshooting section above
+
+
+## Deployment
+
+For deploying to **Google Cloud Run**, see [DEPLOYMENT.md](DEPLOYMENT.md).

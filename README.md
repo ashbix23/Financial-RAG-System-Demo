@@ -108,10 +108,6 @@ rag-production-system/
 - `app/core/config.py` – Settings from environment
 - `app/static/` – Web UI (single-page chat)
 
-## Deployment
-
-For deploying to **Google Cloud Run**, see [DEPLOYMENT.md](DEPLOYMENT.md).
-
 ## License
 
 MIT. See [LICENSE](LICENSE).
